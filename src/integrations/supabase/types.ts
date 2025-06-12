@@ -17,6 +17,7 @@ export type Database = {
           mentor_id: string | null
           motivo: string | null
           nome_usuario: string
+          telefone_usuario: string
         }
         Insert: {
           data_submissao?: string | null
@@ -25,6 +26,7 @@ export type Database = {
           mentor_id?: string | null
           motivo?: string | null
           nome_usuario: string
+          telefone_usuario: string
         }
         Update: {
           data_submissao?: string | null
@@ -33,6 +35,7 @@ export type Database = {
           mentor_id?: string | null
           motivo?: string | null
           nome_usuario?: string
+          telefone_usuario?: string
         }
         Relationships: [
           {
@@ -41,42 +44,54 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "mentores"
             referencedColumns: ["id"]
-          },
+          }
         ]
       }
       mentores: {
         Row: {
-          criado_em: string | null
-          descricao: string | null
-          disponibilidade: string | null
-          disponivel: boolean | null
-          foto_url: string | null
           id: string
           nome: string
-          setor: string
-          tags: string[] | null
+          email: string | null
+          telefone: string | null
+          cargo_atual: string | null
+          empresa_atual: string | null
+          experiencia_profissional: string | null
+          formacao_academica: string | null
+          especialidades: string[] | null
+          disponivel: boolean | null
+          foto_url: string | null
+          criado_em: string | null
+          atualizado_em: string | null
         }
         Insert: {
-          criado_em?: string | null
-          descricao?: string | null
-          disponibilidade?: string | null
-          disponivel?: boolean | null
-          foto_url?: string | null
           id?: string
           nome: string
-          setor: string
-          tags?: string[] | null
-        }
-        Update: {
-          criado_em?: string | null
-          descricao?: string | null
-          disponibilidade?: string | null
+          email?: string | null
+          telefone?: string | null
+          cargo_atual?: string | null
+          empresa_atual?: string | null
+          experiencia_profissional?: string | null
+          formacao_academica?: string | null
+          especialidades?: string[] | null
           disponivel?: boolean | null
           foto_url?: string | null
+          criado_em?: string | null
+          atualizado_em?: string | null
+        }
+        Update: {
           id?: string
           nome?: string
-          setor?: string
-          tags?: string[] | null
+          email?: string | null
+          telefone?: string | null
+          cargo_atual?: string | null
+          empresa_atual?: string | null
+          experiencia_profissional?: string | null
+          formacao_academica?: string | null
+          especialidades?: string[] | null
+          disponivel?: boolean | null
+          foto_url?: string | null
+          criado_em?: string | null
+          atualizado_em?: string | null
         }
         Relationships: []
       }

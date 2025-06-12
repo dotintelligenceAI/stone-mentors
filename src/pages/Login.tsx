@@ -142,7 +142,7 @@ const Login = () => {
 
         {/* Footer */}
         <div className="text-center mt-8 text-sm text-gray-500">
-          <p>Busque seu mentor - Painel Administrativo</p>
+          <p>Field of Mentor - Painel Administrativo</p>
           <p className="mt-1">Acesso restrito a administradores</p>
         </div>
       </div>

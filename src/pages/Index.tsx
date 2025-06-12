@@ -17,14 +17,18 @@ const Index = () => {
     try {
       setIsLoading(true);
       const mentorData = await fetchMentors();
+      if (!mentorData || mentorData.length === 0) {
+        throw new Error('Nenhum mentor encontrado');
+      }
       setMentors(mentorData);
     } catch (error) {
       console.error('Error loading mentors:', error);
       toast({
-        title: "Erro",
-        description: "Falha ao carregar mentores. Tente novamente mais tarde.",
+        title: "Erro ao carregar mentores",
+        description: "Não foi possível carregar os mentores. Por favor, tente novamente mais tarde.",
         variant: "destructive",
       });
+      setMentors([]); // Garante que o estado seja limpo em caso de erro
     } finally {
       setIsLoading(false);
     }
@@ -36,74 +40,82 @@ const Index = () => {
 
   const areas = [
     {
-      name: "Marketing e Comunicação",
+      name: "Comunicação e Marketing",
       route: "/marketing-comunicacao",
-      description: "Especialistas em marketing digital, branding e comunicação",
+      description: "Divulgue melhor o seu negócio.",
+      subDescription: "Mentores que sabem usar redes sociais, criar conteúdo e fortalecer sua marca.",
       icon: TrendingUp,
-      color: "from-[#11AC5C] to-[#0FCC7D]",
-      emoji: "📈",
+      color: "from-impulso-dark to-impulso-light",
       count: getAreaMentorCount(mentor => 
-        mentor.setor.toLowerCase().includes('marketing') || 
-        mentor.setor.toLowerCase().includes('comunicação')
+        mentor.especialidades?.some(esp => 
+          esp.toLowerCase().includes('marketing') || 
+          esp.toLowerCase().includes('comunicação')
+        ) || false
       )
     },
     {
       name: "Comercial, Vendas e Relacionamento",
       route: "/comercial-vendas-relacionamento",
-      description: "Profissionais de vendas, negociação e relacionamento com clientes",
+      description: "Venda mais e atenda melhor.",
+      subDescription: "Mentores com experiência em negociação, atendimento e estratégias de vendas.",
       icon: Target,
-      color: "from-[#014837] to-[#11AC5C]",
-      emoji: "🎯",
+      color: "from-impulso-dark to-impulso-light",
       count: getAreaMentorCount(mentor => 
-        mentor.setor.toLowerCase().includes('comercial') || 
-        mentor.setor.toLowerCase().includes('vendas') ||
-        mentor.setor.toLowerCase().includes('relacionamento') ||
-        mentor.setor.toLowerCase().includes('sales')
+        mentor.especialidades?.some(esp => 
+          esp.toLowerCase().includes('comercial') || 
+          esp.toLowerCase().includes('vendas') ||
+          esp.toLowerCase().includes('relacionamento') ||
+          esp.toLowerCase().includes('sales')
+        ) || false
       )
     },
     {
-      name: "Finanças",
+      name: "Contabilidade e Finanças",
       route: "/financas",
-      description: "Experts em gestão financeira, planejamento e investimentos",
+      description: "Cuide bem do seu dinheiro.",
+      subDescription: "Mentores que orientam sobre controle financeiro, precificação e fluxo de caixa.",
       icon: DollarSign,
-      color: "from-[#0FCC7D] to-[#11AC5C]",
-      emoji: "💰",
+      color: "from-impulso-dark to-impulso-light",
       count: getAreaMentorCount(mentor => 
-        mentor.setor.toLowerCase().includes('finanças') || 
-        mentor.setor.toLowerCase().includes('financas') ||
-        mentor.setor.toLowerCase().includes('financeiro') ||
-        mentor.setor.toLowerCase().includes('contabil') ||
-        mentor.setor.toLowerCase().includes('investimento')
+        mentor.especialidades?.some(esp => 
+          esp.toLowerCase().includes('finanças') || 
+          esp.toLowerCase().includes('financas') ||
+          esp.toLowerCase().includes('financeiro') ||
+          esp.toLowerCase().includes('contabil') ||
+          esp.toLowerCase().includes('investimento')
+        ) || false
       )
     },
     {
       name: "Gestão, Inovação e Estratégia",
       route: "/gestao-inovacao-estrategia",
-      description: "Líderes em gestão empresarial, inovação, tecnologia e estratégia",
+      description: "Organize e faça seu negócio crescer.",
+      subDescription: "Mentores que ajudam com planejamento, rotina e ideias para inovar.",
       icon: BarChart3,
-      color: "from-[#11AC5C] to-[#014837]",
-      emoji: "🚀",
+      color: "from-impulso-dark to-impulso-light",
       count: getAreaMentorCount(mentor => 
-        mentor.setor.toLowerCase().includes('gestão') || 
-        mentor.setor.toLowerCase().includes('gestao') ||
-        mentor.setor.toLowerCase().includes('inovação') ||
-        mentor.setor.toLowerCase().includes('inovacao') ||
-        mentor.setor.toLowerCase().includes('estratégia') ||
-        mentor.setor.toLowerCase().includes('estrategia') ||
-        mentor.setor.toLowerCase().includes('liderança') ||
-        mentor.setor.toLowerCase().includes('lideranca') ||
-        mentor.setor.toLowerCase().includes('ceo') ||
-        mentor.setor.toLowerCase().includes('diretor') ||
-        mentor.setor.toLowerCase().includes('tecnologia') ||
-        mentor.setor.toLowerCase().includes('tech') ||
-        mentor.setor.toLowerCase().includes('ti') ||
-        mentor.setor.toLowerCase().includes('desenvolvimento') ||
-        mentor.setor.toLowerCase().includes('programação') ||
-        mentor.setor.toLowerCase().includes('programacao') ||
-        mentor.setor.toLowerCase().includes('software') ||
-        mentor.setor.toLowerCase().includes('digital') ||
-        mentor.setor.toLowerCase().includes('dados') ||
-        mentor.setor.toLowerCase().includes('data')
+        mentor.especialidades?.some(esp => 
+          esp.toLowerCase().includes('gestão') || 
+          esp.toLowerCase().includes('gestao') ||
+          esp.toLowerCase().includes('inovação') ||
+          esp.toLowerCase().includes('inovacao') ||
+          esp.toLowerCase().includes('estratégia') ||
+          esp.toLowerCase().includes('estrategia') ||
+          esp.toLowerCase().includes('liderança') ||
+          esp.toLowerCase().includes('lideranca') ||
+          esp.toLowerCase().includes('ceo') ||
+          esp.toLowerCase().includes('diretor') ||
+          esp.toLowerCase().includes('tecnologia') ||
+          esp.toLowerCase().includes('tech') ||
+          esp.toLowerCase().includes('ti') ||
+          esp.toLowerCase().includes('desenvolvimento') ||
+          esp.toLowerCase().includes('programação') ||
+          esp.toLowerCase().includes('programacao') ||
+          esp.toLowerCase().includes('software') ||
+          esp.toLowerCase().includes('digital') ||
+          esp.toLowerCase().includes('dados') ||
+          esp.toLowerCase().includes('data')
+        ) || false
       )
     }
   ];
@@ -111,23 +123,28 @@ const Index = () => {
   const totalAvailableMentors = mentors.filter(mentor => mentor.disponivel).length;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white via-green-50 to-emerald-50">
+    <div className="min-h-screen bg-gradient-to-br from-white via-impulso-dark/5 to-impulso-dark/10">
       {/* Header */}
-      <div className="bg-gradient-to-r from-[#014837] via-[#11AC5C] to-[#0FCC7D] shadow-lg">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative">
+      <div className="bg-gradient-to-r from-impulso-dark via-impulso-dark/90 to-impulso-light shadow-lg">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 relative">
+          {/* Logo */}
+          <div className="absolute top-6 left-6">
+            <img src="/Logo_Impulso_Stone.ai_branco.png" alt="Impulso Stone" className="h-12" />
+          </div>
+          
           {/* Admin Link */}
           <Link 
             to="/login" 
-            className="absolute top-4 right-4 bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-lg hover:bg-white/30 transition-all duration-300 text-sm font-medium"
+            className="absolute top-6 right-6 bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-lg hover:bg-white/30 transition-all duration-300 text-sm font-medium"
           >
             Admin
           </Link>
-          <div className="text-center">
-            <h1 className="text-5xl md:text-7xl font-bold text-white mb-8">
-              Encontre Seu Mentor Perfeito
+          <div className="text-center mt-12">
+            <h1 className="text-4xl md:text-6xl font-bold text-white mb-8">
+              Escolha o mentor ideal pra você e pro seu negócio
             </h1>
-            <p className="text-2xl md:text-3xl text-white/90 max-w-4xl mx-auto leading-relaxed mb-8">
-              Escolha sua área de interesse e conecte-se com profissionais experientes
+            <p className="text-xl md:text-2xl text-white/90 max-w-4xl mx-auto leading-relaxed mb-12">
+              Conecte-se com quem pode te ajudar a dar o próximo passo. Os mentores Impulso são especialistas da Stone prontos pra te ouvir e compartilhar dicas práticas pro dia a dia do seu negócio. É só escolher e agendar sua mentoria!
             </p>
             {!isLoading && (
               <div className="flex justify-center items-center space-x-8">
@@ -149,10 +166,34 @@ const Index = () => {
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         {/* Areas Grid */}
-        {!isLoading ? (
+        {isLoading ? (
+          <div className="flex justify-center items-center py-20">
+            <div className="text-center">
+              <div className="animate-spin w-12 h-12 border-4 border-impulso-light/20 border-t-impulso-light rounded-full mx-auto mb-4"></div>
+              <p className="text-impulso-dark font-medium text-lg">Carregando áreas de mentoria...</p>
+            </div>
+          </div>
+        ) : mentors.length === 0 ? (
+          <div className="text-center py-20">
+            <div className="bg-white/50 backdrop-blur-sm rounded-2xl p-8 max-w-2xl mx-auto">
+              <h3 className="text-2xl font-bold text-impulso-dark mb-4">
+                Nenhum mentor disponível no momento
+              </h3>
+              <p className="text-gray-600 mb-6">
+                Estamos trabalhando para trazer novos mentores. Por favor, tente novamente mais tarde.
+              </p>
+              <button 
+                onClick={loadMentors}
+                className="bg-gradient-to-r from-impulso-dark to-impulso-light text-white px-6 py-2 rounded-lg hover:from-impulso-light hover:to-impulso-dark transition-all duration-300"
+              >
+                Tentar novamente
+              </button>
+            </div>
+          </div>
+        ) : (
           <>
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-[#014837] mb-4">
+              <h2 className="text-3xl font-bold text-impulso-dark mb-4">
                 Escolha Sua Área de Interesse
               </h2>
               <p className="text-xl text-gray-600 max-w-2xl mx-auto">
@@ -169,30 +210,30 @@ const Index = () => {
                     to={area.route}
                     className="group block"
                   >
-                    <div className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 overflow-hidden border-2 border-transparent hover:border-[#11AC5C]/20">
+                    <div className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 overflow-hidden border-2 border-transparent hover:border-impulso-light/20">
                       {/* Header with gradient */}
-                      <div className={`bg-gradient-to-r ${area.color} p-8 text-white`}>
+                      <div className={`bg-gradient-to-r ${area.color} via-impulso-dark/90 p-8 text-white`}>
                         <div className="flex items-center justify-between mb-4">
-                          <div className="text-5xl">{area.emoji}</div>
                           <div className="bg-white/20 backdrop-blur-sm rounded-full p-3">
                             <IconComponent className="w-8 h-8" />
                           </div>
                         </div>
                         <h3 className="text-2xl font-bold mb-2">{area.name}</h3>
-                        <p className="text-white/90 text-lg">{area.description}</p>
+                        <p className="text-white/90 text-lg font-medium">{area.description}</p>
+                        <p className="text-white/80 text-base mt-2">{area.subDescription}</p>
                       </div>
 
                       {/* Content */}
                       <div className="p-8">
                         <div className="flex items-center justify-between">
-                          <div className="text-[#014837]">
-                            <span className="text-3xl font-bold text-[#11AC5C]">{area.count}</span>
+                          <div className="text-impulso-dark">
+                            <span className="text-3xl font-bold text-impulso-light">{area.count}</span>
                             <span className="text-lg font-semibold ml-2">
                               mentor{area.count !== 1 ? 'es' : ''} disponível{area.count !== 1 ? 'is' : ''}
                             </span>
                           </div>
-                          <div className="bg-[#11AC5C]/10 rounded-full p-3 group-hover:bg-[#11AC5C] group-hover:text-white transition-all duration-300">
-                            <ArrowRight className="w-6 h-6 text-[#11AC5C] group-hover:text-white" />
+                          <div className="bg-impulso-light/10 rounded-full p-3 group-hover:bg-impulso-light group-hover:text-impulso-dark transition-all duration-300">
+                            <ArrowRight className="w-6 h-6 text-impulso-light group-hover:text-impulso-dark" />
                           </div>
                         </div>
                         
@@ -210,26 +251,19 @@ const Index = () => {
 
             {/* Call to Action */}
             <div className="text-center mt-16">
-              <div className="bg-gradient-to-r from-[#11AC5C]/10 to-[#0FCC7D]/10 rounded-2xl p-8 border border-[#11AC5C]/20">
-                <h3 className="text-2xl font-bold text-[#014837] mb-4">
+              <div className="bg-gradient-to-r from-impulso-dark/10 to-impulso-purple/20 rounded-2xl p-8 border border-impulso-light/20">
+                <h3 className="text-2xl font-bold text-impulso-dark mb-4">
                   Não encontrou sua área?
                 </h3>
                 <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
                   Estamos sempre expandindo nossa rede de mentores. Entre em contato conosco para sugestões de novas áreas ou mentores específicos.
                 </p>
-                <button className="bg-gradient-to-r from-[#11AC5C] to-[#0FCC7D] text-white px-8 py-3 rounded-lg hover:from-[#014837] hover:to-[#11AC5C] transition-all duration-300 transform hover:scale-105 font-semibold">
+                <button className="bg-gradient-to-r from-impulso-dark to-impulso-light text-white px-8 py-3 rounded-lg hover:from-impulso-light hover:to-impulso-dark transition-all duration-300 transform hover:scale-105 font-semibold">
                   Fale Conosco
                 </button>
               </div>
             </div>
           </>
-        ) : (
-          <div className="flex justify-center items-center py-20">
-            <div className="text-center">
-              <div className="animate-spin w-12 h-12 border-4 border-[#11AC5C]/20 border-t-[#11AC5C] rounded-full mx-auto mb-4"></div>
-              <p className="text-[#014837] font-medium text-lg">Carregando áreas de mentoria...</p>
-            </div>
-          </div>
         )}
       </div>
     </div>

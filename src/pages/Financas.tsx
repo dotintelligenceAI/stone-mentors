@@ -27,11 +27,19 @@ const Financas = () => {
       const mentorData = await fetchMentors();
       // Filtrar apenas mentores da área específica
       const filteredMentors = mentorData.filter(mentor => 
-        mentor.setor.toLowerCase().includes('finanças') || 
-        mentor.setor.toLowerCase().includes('financas') ||
-        mentor.setor.toLowerCase().includes('financeiro') ||
-        mentor.setor.toLowerCase().includes('contabil') ||
-        mentor.setor.toLowerCase().includes('investimento')
+        mentor.especialidades?.some(esp => 
+          esp.toLowerCase().includes('finanças') || 
+          esp.toLowerCase().includes('financas') ||
+          esp.toLowerCase().includes('financeiro') ||
+          esp.toLowerCase().includes('contabil') ||
+          esp.toLowerCase().includes('investimento') ||
+          esp.toLowerCase().includes('contabilidade') ||
+          esp.toLowerCase().includes('controladoria') ||
+          esp.toLowerCase().includes('planejamento financeiro') ||
+          esp.toLowerCase().includes('fluxo de caixa') ||
+          esp.toLowerCase().includes('precificação') ||
+          esp.toLowerCase().includes('precificacao')
+        ) || false
       );
       setMentors(filteredMentors);
     } catch (error) {

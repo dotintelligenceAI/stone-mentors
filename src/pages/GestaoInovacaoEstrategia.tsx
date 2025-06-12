@@ -27,26 +27,35 @@ const GestaoInovacaoEstrategia = () => {
       const mentorData = await fetchMentors();
       // Filtrar apenas mentores da área específica
       const filteredMentors = mentorData.filter(mentor => 
-        mentor.setor.toLowerCase().includes('gestão') || 
-        mentor.setor.toLowerCase().includes('gestao') ||
-        mentor.setor.toLowerCase().includes('inovação') ||
-        mentor.setor.toLowerCase().includes('inovacao') ||
-        mentor.setor.toLowerCase().includes('estratégia') ||
-        mentor.setor.toLowerCase().includes('estrategia') ||
-        mentor.setor.toLowerCase().includes('liderança') ||
-        mentor.setor.toLowerCase().includes('lideranca') ||
-        mentor.setor.toLowerCase().includes('ceo') ||
-        mentor.setor.toLowerCase().includes('diretor') ||
-        mentor.setor.toLowerCase().includes('tecnologia') ||
-        mentor.setor.toLowerCase().includes('tech') ||
-        mentor.setor.toLowerCase().includes('ti') ||
-        mentor.setor.toLowerCase().includes('desenvolvimento') ||
-        mentor.setor.toLowerCase().includes('programação') ||
-        mentor.setor.toLowerCase().includes('programacao') ||
-        mentor.setor.toLowerCase().includes('software') ||
-        mentor.setor.toLowerCase().includes('digital') ||
-        mentor.setor.toLowerCase().includes('dados') ||
-        mentor.setor.toLowerCase().includes('data')
+        mentor.especialidades?.some(esp => 
+          esp.toLowerCase().includes('gestão') || 
+          esp.toLowerCase().includes('gestao') ||
+          esp.toLowerCase().includes('inovação') ||
+          esp.toLowerCase().includes('inovacao') ||
+          esp.toLowerCase().includes('estratégia') ||
+          esp.toLowerCase().includes('estrategia') ||
+          esp.toLowerCase().includes('liderança') ||
+          esp.toLowerCase().includes('lideranca') ||
+          esp.toLowerCase().includes('ceo') ||
+          esp.toLowerCase().includes('diretor') ||
+          esp.toLowerCase().includes('tecnologia') ||
+          esp.toLowerCase().includes('tech') ||
+          esp.toLowerCase().includes('ti') ||
+          esp.toLowerCase().includes('desenvolvimento') ||
+          esp.toLowerCase().includes('programação') ||
+          esp.toLowerCase().includes('programacao') ||
+          esp.toLowerCase().includes('software') ||
+          esp.toLowerCase().includes('digital') ||
+          esp.toLowerCase().includes('dados') ||
+          esp.toLowerCase().includes('data') ||
+          esp.toLowerCase().includes('transformação digital') ||
+          esp.toLowerCase().includes('transformacao digital') ||
+          esp.toLowerCase().includes('agile') ||
+          esp.toLowerCase().includes('scrum') ||
+          esp.toLowerCase().includes('product management') ||
+          esp.toLowerCase().includes('gestão de produtos') ||
+          esp.toLowerCase().includes('gestao de produtos')
+        ) || false
       );
       setMentors(filteredMentors);
     } catch (error) {

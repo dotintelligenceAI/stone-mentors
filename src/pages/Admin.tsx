@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { fetchMentorSubmissions } from '../utils/supabaseService';
 import { toast } from '@/hooks/use-toast';
-import { ArrowLeft, Users, Calendar, Mail, MessageSquare, User, Briefcase, LogOut } from 'lucide-react';
+import { ArrowLeft, Users, Calendar, Mail, MessageSquare, User, Briefcase, LogOut, Phone } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 
 interface MentorSubmissionWithMentor {
@@ -9,6 +9,7 @@ interface MentorSubmissionWithMentor {
   mentor_id: string;
   nome_usuario: string;
   email_usuario: string;
+  telefone_usuario: string;
   motivo?: string;
   data_submissao: string;
   mentores: {
@@ -258,14 +259,13 @@ const Admin = () => {
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="flex items-center">
-                            <Mail className="w-4 h-4 text-[#11AC5C] mr-2" />
-                            <a 
-                              href={`mailto:${submission.email_usuario}`}
-                              className="text-sm text-[#11AC5C] hover:text-[#014837] transition-colors"
-                            >
-                              {submission.email_usuario}
-                            </a>
+                          <div className="flex items-center space-x-2">
+                            <Mail className="w-4 h-4 text-[#11AC5C]" />
+                            <span className="text-sm text-gray-600">{submission.email_usuario}</span>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <Phone className="w-4 h-4 text-[#11AC5C]" />
+                            <span className="text-sm text-gray-600">{submission.telefone_usuario}</span>
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">

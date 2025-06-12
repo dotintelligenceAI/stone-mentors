@@ -27,10 +27,17 @@ const ComercialVendasRelacionamento = () => {
       const mentorData = await fetchMentors();
       // Filtrar apenas mentores da área específica
       const filteredMentors = mentorData.filter(mentor => 
-        mentor.setor.toLowerCase().includes('comercial') || 
-        mentor.setor.toLowerCase().includes('vendas') ||
-        mentor.setor.toLowerCase().includes('relacionamento') ||
-        mentor.setor.toLowerCase().includes('sales')
+        mentor.especialidades?.some(esp => 
+          esp.toLowerCase().includes('comercial') || 
+          esp.toLowerCase().includes('vendas') ||
+          esp.toLowerCase().includes('relacionamento') ||
+          esp.toLowerCase().includes('sales') ||
+          esp.toLowerCase().includes('negociação') ||
+          esp.toLowerCase().includes('negociacao') ||
+          esp.toLowerCase().includes('atendimento') ||
+          esp.toLowerCase().includes('customer success') ||
+          esp.toLowerCase().includes('cs')
+        ) || false
       );
       setMentors(filteredMentors);
     } catch (error) {

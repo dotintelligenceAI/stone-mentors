@@ -27,8 +27,17 @@ const MarketingComunicacao = () => {
       const mentorData = await fetchMentors();
       // Filtrar apenas mentores da área específica
       const filteredMentors = mentorData.filter(mentor => 
-        mentor.setor.toLowerCase().includes('marketing') || 
-        mentor.setor.toLowerCase().includes('comunicação')
+        mentor.especialidades?.some(esp => 
+          esp.toLowerCase().includes('marketing') || 
+          esp.toLowerCase().includes('comunicação') ||
+          esp.toLowerCase().includes('comunicacao') ||
+          esp.toLowerCase().includes('branding') ||
+          esp.toLowerCase().includes('social media') ||
+          esp.toLowerCase().includes('redes sociais') ||
+          esp.toLowerCase().includes('conteúdo') ||
+          esp.toLowerCase().includes('conteudo') ||
+          esp.toLowerCase().includes('digital')
+        ) || false
       );
       setMentors(filteredMentors);
     } catch (error) {
