@@ -15,6 +15,9 @@ export interface Mentor {
   disponibilidade?: string;
   disponivel: boolean;
   foto_url?: string;
+  opcao_agenda_um?: string;
+  opcao_agenda_dois?: string;
+  opcao_agenda_tres?: string;
   created_at: string;
   updated_at: string;
 }
@@ -26,5 +29,6 @@ export interface MentorSubmission {
   email_usuario: string;
   telefone_usuario: string;
   motivo?: string;
+  agenda?: string;
   data_submissao?: string;
 }

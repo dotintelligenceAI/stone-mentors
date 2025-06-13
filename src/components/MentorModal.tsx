@@ -4,10 +4,12 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Mentor } from '../types/mentor';
 import { submitMentorChoice, updateMentorAvailability } from '../utils/supabaseService';
+import { sendMentorNotification, sendUserNotification } from '../utils/evolution_api';
 import { toast } from '@/hooks/use-toast';
-import { User, Mail, MessageSquare, Phone, X, MapPin, Briefcase, Clock, Tag } from 'lucide-react';
+import { User, Mail, MessageSquare, Phone, X, MapPin, Briefcase, Clock, Tag, Calendar } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 
 interface MentorModalProps {
@@ -28,16 +30,38 @@ export const MentorModal: React.FC<MentorModalProps> = ({
     email_usuario: '',
     telefone_usuario: '',
     motivo: '',
+    agenda: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showForm, setShowForm] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value,
-    }));
+    
+    // Aplicar máscara no telefone
+    if (name === 'telefone_usuario') {
+      const phoneValue = value.replace(/\D/g, ''); // Remove caracteres não numéricos
+      let formattedPhone = phoneValue;
+      
+      if (phoneValue.length <= 11) {
+        // Formatar como (11) 99999-9999
+        formattedPhone = phoneValue.replace(/^(\d{2})(\d{5})(\d{4})$/, '($1) $2-$3');
+        if (phoneValue.length === 10) {
+          // Formatar como (11) 9999-9999 para números antigos
+          formattedPhone = phoneValue.replace(/^(\d{2})(\d{4})(\d{4})$/, '($1) $2-$3');
+        }
+      }
+      
+      setFormData(prev => ({
+        ...prev,
+        [name]: formattedPhone,
+      }));
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -45,10 +69,22 @@ export const MentorModal: React.FC<MentorModalProps> = ({
     
     if (!mentor) return;
     
-    if (!formData.nome_usuario || !formData.email_usuario) {
+    if (!formData.nome_usuario || !formData.email_usuario || !formData.telefone_usuario || !formData.agenda) {
       toast({
         title: "Informações Obrigatórias",
-        description: "Por favor, preencha nome e email.",
+        description: "Por favor, preencha nome, email, telefone e agenda.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Validar formato do telefone
+    const phoneRegex = /^[\+]?[1-9][\d]{0,15}$/;
+    const cleanPhone = formData.telefone_usuario.replace(/\D/g, '');
+    if (cleanPhone.length < 10 || cleanPhone.length > 15) {
+      toast({
+        title: "Telefone Inválido",
+        description: "Por favor, digite um número de telefone válido com DDD.",
         variant: "destructive",
       });
       return;
@@ -59,22 +95,50 @@ export const MentorModal: React.FC<MentorModalProps> = ({
     try {
       console.log('Submitting mentor choice:', { mentor: mentor.nome, formData });
       
+      // Enviar com telefone limpo para o banco
       await submitMentorChoice({
         mentor_id: mentor.id!,
         nome_usuario: formData.nome_usuario,
         email_usuario: formData.email_usuario,
-        telefone_usuario: formData.telefone_usuario,
+        telefone_usuario: cleanPhone, // Telefone limpo para o banco
         motivo: formData.motivo,
       });
 
       await updateMentorAvailability(mentor.id!, false);
+
+      // Enviar notificações via WhatsApp com telefone limpo
+      try {
+        // Notificação para o mentor
+        await sendMentorNotification({
+          mentorNome: mentor.nome,
+          mentorTelefone: mentor.telefone,
+          empreendedorNome: formData.nome_usuario,
+          empreendedorTelefone: cleanPhone, // Telefone limpo para WhatsApp
+          empreendedorEmail: formData.email_usuario,
+        });
+
+        // Notificação para o usuário
+        await sendUserNotification({
+          empreendedorNome: formData.nome_usuario,
+          empreendedorTelefone: cleanPhone, // Telefone limpo para WhatsApp
+          mentorNome: mentor.nome,
+        });
+      } catch (whatsappError) {
+        console.error('Erro ao enviar mensagens WhatsApp:', whatsappError);
+        // Não falha o processo se o WhatsApp falhar
+        toast({
+          title: "Mentoria Confirmada!",
+          description: `Sua escolha do mentor ${mentor.nome} foi registrada com sucesso! Em caso de problemas com as notificações, entre em contato conosco.`,
+          variant: "default",
+        });
+      }
 
       toast({
         title: "Sucesso!",
         description: `Você escolheu ${mentor.nome} como seu mentor. Eles entrarão em contato em breve!`,
       });
 
-      setFormData({ nome_usuario: '', email_usuario: '', telefone_usuario: '', motivo: '' });
+      setFormData({ nome_usuario: '', email_usuario: '', telefone_usuario: '', motivo: '', agenda: '' });
       setShowForm(false);
       onMentorChosen();
     } catch (error) {
@@ -230,7 +294,7 @@ export const MentorModal: React.FC<MentorModalProps> = ({
                       {mentor.especialidades.map((especialidade, index) => (
                         <Badge 
                           key={index} 
-                          className="bg-impulso-light text-white hover:bg-impulso-dark transition-all duration-300 text-xs font-medium"
+                          className="bg-impulso-dark text-white hover:bg-impulso-light hover:text-impulso-dark transition-all duration-300 text-xs font-medium"
                         >
                           <span className="mr-1">•</span>
                           {especialidade}
@@ -248,13 +312,42 @@ export const MentorModal: React.FC<MentorModalProps> = ({
                       {mentor.tags.map((tag, index) => (
                         <Badge 
                           key={index} 
-                          variant="outline"
-                          className="text-impulso-light border-impulso-light/40 hover:bg-impulso-light/10 transition-all duration-300 text-xs font-medium"
+                          className="bg-impulso-dark text-white hover:bg-impulso-light hover:text-impulso-dark transition-all duration-300 text-xs font-medium"
                         >
                           <Tag className="w-3 h-3 mr-1" />
                           {tag}
                         </Badge>
                       ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Opções de Agenda */}
+                {(mentor.opcao_agenda_um || mentor.opcao_agenda_dois || mentor.opcao_agenda_tres) && (
+                  <div>
+                    <h4 className="font-semibold text-impulso-dark mb-2">Opções de Agenda Disponíveis</h4>
+                    <div className="space-y-2">
+                      {mentor.opcao_agenda_um && (
+                        <div className="flex items-center space-x-2 bg-impulso-light/10 rounded-lg p-3">
+                          <Calendar className="w-4 h-4 text-impulso-light" />
+                          <span className="text-gray-700 font-medium">Opção 1:</span>
+                          <span className="text-gray-600">{mentor.opcao_agenda_um}</span>
+                        </div>
+                      )}
+                      {mentor.opcao_agenda_dois && (
+                        <div className="flex items-center space-x-2 bg-impulso-light/10 rounded-lg p-3">
+                          <Calendar className="w-4 h-4 text-impulso-light" />
+                          <span className="text-gray-700 font-medium">Opção 2:</span>
+                          <span className="text-gray-600">{mentor.opcao_agenda_dois}</span>
+                        </div>
+                      )}
+                      {mentor.opcao_agenda_tres && (
+                        <div className="flex items-center space-x-2 bg-impulso-light/10 rounded-lg p-3">
+                          <Calendar className="w-4 h-4 text-impulso-light" />
+                          <span className="text-gray-700 font-medium">Opção 3:</span>
+                          <span className="text-gray-600">{mentor.opcao_agenda_tres}</span>
+                        </div>
+                      )}
                     </div>
                   </div>
                 )}
@@ -302,7 +395,7 @@ export const MentorModal: React.FC<MentorModalProps> = ({
                    <div className="space-y-2">
                      <Label htmlFor="telefone_usuario" className="text-impulso-dark font-medium">
                        <Phone className="w-4 h-4 inline mr-1" />
-                       Telefone
+                       Telefone *
                      </Label>
                      <Input
                        id="telefone_usuario"
@@ -310,8 +403,10 @@ export const MentorModal: React.FC<MentorModalProps> = ({
                        type="tel"
                        value={formData.telefone_usuario}
                        onChange={handleInputChange}
-                       placeholder="Digite seu telefone"
+                       placeholder="(11) 99999-9999"
                        className="border-impulso-light/30 focus:border-impulso-light"
+                       maxLength={15}
+                       required
                      />
                    </div>
 
@@ -329,6 +424,38 @@ export const MentorModal: React.FC<MentorModalProps> = ({
                       className="border-impulso-light/30 focus:border-impulso-light min-h-[100px]"
                       rows={4}
                     />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="agenda" className="text-impulso-dark font-medium">
+                      <Calendar className="w-4 h-4 inline mr-1" />
+                      Agenda *
+                    </Label>
+                    <Select
+                      value={formData.agenda}
+                      onValueChange={(value) => setFormData(prev => ({ ...prev, agenda: value }))}
+                    >
+                      <SelectTrigger className="border-impulso-light/30 focus:border-impulso-light">
+                        <SelectValue placeholder="Selecione uma opção de agenda" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {mentor.opcao_agenda_um && (
+                          <SelectItem value={mentor.opcao_agenda_um}>
+                            Opção 1: {mentor.opcao_agenda_um}
+                          </SelectItem>
+                        )}
+                        {mentor.opcao_agenda_dois && (
+                          <SelectItem value={mentor.opcao_agenda_dois}>
+                            Opção 2: {mentor.opcao_agenda_dois}
+                          </SelectItem>
+                        )}
+                        {mentor.opcao_agenda_tres && (
+                          <SelectItem value={mentor.opcao_agenda_tres}>
+                            Opção 3: {mentor.opcao_agenda_tres}
+                          </SelectItem>
+                        )}
+                      </SelectContent>
+                    </Select>
                   </div>
 
                   <div className="flex justify-end space-x-3 pt-4">

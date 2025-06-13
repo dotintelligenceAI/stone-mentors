@@ -17,10 +17,14 @@ export const MentorCard: React.FC<MentorCardProps> = ({ mentor, onSelect }) => {
   return (
     <>
       <Card className={`group transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 ${
-        !mentor.disponivel ? 'opacity-60' : 'hover:shadow-impulso-light/20'
+        !mentor.disponivel ? 'opacity-75 bg-gray-50' : 'hover:shadow-impulso-light/20'
       } border-0 bg-white overflow-hidden relative`}>
         {/* Gradient Border Effect */}
-        <div className="absolute inset-0 bg-gradient-to-br from-impulso-dark via-impulso-light to-impulso-dark rounded-lg p-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <div className={`absolute inset-0 bg-gradient-to-br ${
+          mentor.disponivel 
+            ? 'from-impulso-dark/80 via-impulso-light/70 to-impulso-dark/80' 
+            : 'from-gray-400/60 via-gray-500/60 to-gray-400/60'
+        } rounded-lg p-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300`}>
           <div className="bg-white rounded-md h-full w-full"></div>
         </div>
         
@@ -28,20 +32,25 @@ export const MentorCard: React.FC<MentorCardProps> = ({ mentor, onSelect }) => {
           {/* Status Badge */}
           <div className="absolute top-4 right-4">
             {mentor.disponivel ? (
-              <Badge className="bg-gradient-to-r from-impulso-dark to-impulso-light text-white border-0 shadow-md">
+              <Badge className="bg-gradient-to-r from-impulso-dark/90 to-impulso-light/90 text-white border-0 shadow-md">
                 <Star className="w-3 h-3 mr-1" />
                 Disponível
               </Badge>
             ) : (
-              <Badge variant="secondary" className="bg-gray-100 text-gray-600">
-                Ocupado
+              <Badge className="bg-red-50 text-red-600 border border-red-200">
+                <Clock className="w-3 h-3 mr-1" />
+                Indisponível
               </Badge>
             )}
           </div>
 
           {/* Photo and Header */}
           <div className="flex flex-col items-center text-center mb-6 mt-6">
-            <div className="relative w-28 h-28 rounded-full overflow-hidden mb-4 ring-4 ring-white shadow-xl group-hover:ring-impulso-light/30 transition-all duration-300">
+            <div className={`relative w-28 h-28 rounded-full overflow-hidden mb-4 ring-4 ring-white shadow-xl ${
+              mentor.disponivel 
+                ? 'group-hover:ring-impulso-light/20' 
+                : 'grayscale group-hover:grayscale-0'
+            } transition-all duration-300`}>
               <img
                 src={mentor.foto_url || "/placeholder.svg"}
                 alt={mentor.nome}
@@ -50,14 +59,28 @@ export const MentorCard: React.FC<MentorCardProps> = ({ mentor, onSelect }) => {
                   e.currentTarget.src = "/placeholder.svg";
                 }}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-impulso-dark/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className={`absolute inset-0 bg-gradient-to-t ${
+                mentor.disponivel 
+                  ? 'from-impulso-dark/10 to-transparent' 
+                  : 'from-gray-600/30 to-transparent'
+              } opacity-0 group-hover:opacity-100 transition-opacity duration-300`}></div>
             </div>
-            <h3 className="font-bold text-xl text-impulso-dark mb-2 group-hover:text-impulso-light transition-colors duration-300">
+            <h3 className={`font-bold text-xl mb-2 transition-colors duration-300 ${
+              mentor.disponivel
+                ? 'text-impulso-dark group-hover:text-impulso-light'
+                : 'text-gray-600'
+            }`}>
               {mentor.nome}
             </h3>
-            <div className="flex items-center text-impulso-light mb-3">
+            <div className={`flex items-center mb-3 ${
+              mentor.disponivel ? 'text-impulso-light' : 'text-gray-500'
+            }`}>
               <User className="w-4 h-4 mr-2" />
-              <span className="text-sm font-semibold bg-gradient-to-r from-impulso-dark to-impulso-light bg-clip-text text-transparent">
+              <span className={`text-sm font-semibold ${
+                mentor.disponivel 
+                  ? 'bg-gradient-to-r from-impulso-dark to-impulso-light bg-clip-text text-transparent'
+                  : 'text-gray-500'
+              }`}>
                 {mentor.cargo_atual}
               </span>
             </div>
@@ -68,7 +91,11 @@ export const MentorCard: React.FC<MentorCardProps> = ({ mentor, onSelect }) => {
             <Button
               onClick={() => setIsDetailsModalOpen(true)}
               variant="outline"
-              className="w-full border-impulso-light/30 text-impulso-light hover:bg-impulso-light hover:text-impulso-dark transition-all duration-300 group/btn"
+              className={`w-full transition-all duration-300 group/btn ${
+                mentor.disponivel
+                  ? 'border-impulso-light/20 text-impulso-light hover:bg-impulso-light/10 hover:text-impulso-dark'
+                  : 'border-gray-300 text-gray-600 hover:bg-gray-50'
+              }`}
             >
               <Eye className="w-4 h-4 mr-2 group-hover/btn:scale-110 transition-transform duration-200" />
               Ver Detalhes
@@ -79,8 +106,8 @@ export const MentorCard: React.FC<MentorCardProps> = ({ mentor, onSelect }) => {
               disabled={!mentor.disponivel}
               className={`w-full transition-all duration-300 transform ${
                 mentor.disponivel
-                  ? 'bg-gradient-to-r from-impulso-dark to-impulso-light hover:from-impulso-light hover:to-impulso-dark text-white shadow-lg hover:shadow-xl hover:scale-105'
-                  : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                  ? 'bg-gradient-to-r from-impulso-dark/90 to-impulso-light/90 hover:from-impulso-light/90 hover:to-impulso-dark/90 text-white shadow-lg hover:shadow-xl hover:scale-105'
+                  : 'bg-gray-200 text-gray-500 cursor-not-allowed'
               }`}
             >
               {mentor.disponivel ? (
@@ -89,7 +116,10 @@ export const MentorCard: React.FC<MentorCardProps> = ({ mentor, onSelect }) => {
                   Escolher Este Mentor
                 </>
               ) : (
-                'Não Disponível'
+                <>
+                  <Clock className="w-4 h-4 mr-2" />
+                  Indisponível
+                </>
               )}
             </Button>
           </div>

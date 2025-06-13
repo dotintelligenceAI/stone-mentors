@@ -131,7 +131,7 @@ export const MentorDetailsModal: React.FC<MentorDetailsModalProps> = ({
                 {especialidadesArray.map((especialidade, index) => (
                   <Badge 
                     key={index} 
-                    className="bg-impulso-light text-white hover:bg-impulso-dark transition-all duration-300 text-xs font-medium"
+                    className="bg-impulso-dark text-white hover:bg-impulso-light hover:text-impulso-dark transition-all duration-300 text-xs font-medium"
                   >
                     <span className="mr-1">•</span>
                     {especialidade}
@@ -149,13 +149,42 @@ export const MentorDetailsModal: React.FC<MentorDetailsModalProps> = ({
                 {tagsArray.map((tag, index) => (
                   <Badge 
                     key={index} 
-                    variant="outline"
-                    className="text-impulso-light border-impulso-light/40 hover:bg-impulso-light/10 transition-all duration-300 text-xs font-medium"
+                    className="bg-impulso-dark text-white hover:bg-impulso-light hover:text-impulso-dark transition-all duration-300 text-xs font-medium"
                   >
                     <Tag className="w-3 h-3 mr-1" />
                     {tag}
                   </Badge>
                 ))}
+              </div>
+            </div>
+          )}
+
+          {/* Opções de Agenda */}
+          {(mentor.opcao_agenda_um || mentor.opcao_agenda_dois || mentor.opcao_agenda_tres) && (
+            <div>
+              <h4 className="font-semibold text-impulso-dark mb-2">Opções de Agenda Disponíveis</h4>
+              <div className="space-y-2">
+                {mentor.opcao_agenda_um && (
+                  <div className="flex items-center space-x-2 bg-impulso-light/10 rounded-lg p-3">
+                    <Clock className="w-4 h-4 text-impulso-light" />
+                    <span className="text-gray-700 font-medium">Opção 1:</span>
+                    <span className="text-gray-600">{mentor.opcao_agenda_um}</span>
+                  </div>
+                )}
+                {mentor.opcao_agenda_dois && (
+                  <div className="flex items-center space-x-2 bg-impulso-light/10 rounded-lg p-3">
+                    <Clock className="w-4 h-4 text-impulso-light" />
+                    <span className="text-gray-700 font-medium">Opção 2:</span>
+                    <span className="text-gray-600">{mentor.opcao_agenda_dois}</span>
+                  </div>
+                )}
+                {mentor.opcao_agenda_tres && (
+                  <div className="flex items-center space-x-2 bg-impulso-light/10 rounded-lg p-3">
+                    <Clock className="w-4 h-4 text-impulso-light" />
+                    <span className="text-gray-700 font-medium">Opção 3:</span>
+                    <span className="text-gray-600">{mentor.opcao_agenda_tres}</span>
+                  </div>
+                )}
               </div>
             </div>
           )}

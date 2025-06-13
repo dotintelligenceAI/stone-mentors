@@ -11,10 +11,11 @@ interface MentorSubmissionWithMentor {
   email_usuario: string;
   telefone_usuario: string;
   motivo?: string;
+  agenda?: string;
+  agendamento?: string;
   data_submissao: string;
   mentores: {
     nome: string;
-    setor: string;
     foto_url: string;
   };
 }
@@ -63,13 +64,12 @@ const Admin = () => {
       submission.email_usuario.toLowerCase().includes(searchTerm.toLowerCase()) ||
       submission.mentores.nome.toLowerCase().includes(searchTerm.toLowerCase());
     
-    const matchesSector = filterSector === 'all' || 
-      submission.mentores.setor.toLowerCase().includes(filterSector.toLowerCase());
+    const matchesSector = filterSector === 'all' || true;
     
     return matchesSearch && matchesSector;
   });
 
-  const uniqueSectors = [...new Set(submissions.map(s => s.mentores.setor))];
+  const uniqueSectors: string[] = [];
 
   const handleLogout = () => {
     localStorage.removeItem('isAdminAuthenticated');
@@ -176,9 +176,6 @@ const Admin = () => {
                 className="w-full px-4 py-2 border border-[#11AC5C]/30 rounded-lg focus:ring-2 focus:ring-[#11AC5C]/20 focus:border-[#11AC5C]"
               >
                 <option value="all">Todos os setores</option>
-                {uniqueSectors.map(sector => (
-                  <option key={sector} value={sector}>{sector}</option>
-                ))}
               </select>
             </div>
           </div>
@@ -221,6 +218,12 @@ const Admin = () => {
                         Data
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Agendamento
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Agenda
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Motivo
                       </th>
                     </tr>
@@ -243,9 +246,6 @@ const Admin = () => {
                             <div>
                               <p className="text-sm font-medium text-[#014837]">
                                 {submission.mentores.nome}
-                              </p>
-                              <p className="text-sm text-gray-500">
-                                {submission.mentores.setor}
                               </p>
                             </div>
                           </div>
@@ -273,6 +273,22 @@ const Admin = () => {
                             <Calendar className="w-4 h-4 text-gray-400 mr-2" />
                             <span className="text-sm text-gray-900">
                               {formatDate(submission.data_submissao)}
+                            </span>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="flex items-center">
+                            <Calendar className="w-4 h-4 text-gray-400 mr-2" />
+                            <span className="text-sm text-gray-900">
+                              {submission.agendamento || 'N/A'}
+                            </span>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="flex items-center">
+                            <Calendar className="w-4 h-4 text-gray-400 mr-2" />
+                            <span className="text-sm text-gray-900">
+                              {submission.agenda || 'N/A'}
                             </span>
                           </div>
                         </td>
