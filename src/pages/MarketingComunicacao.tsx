@@ -81,29 +81,29 @@ const MarketingComunicacao = () => {
     <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-[#11AE5E]/5">
       {/* Header */}
       <div className="bg-gradient-to-r from-[#11AE5E]/95 via-[#11AE5E]/90 to-[#10CA7B]/95 shadow-lg">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-24 relative">
           {/* Logo */}
-          <div className="absolute top-6 left-6">
-            <img src="/Logo_Impulso_Stone.ai_branco.png" alt="Impulso Stone" className="h-12" />
+          <div className="absolute top-4 sm:top-6 left-4 sm:left-6">
+            <img src="/Logo_Impulso_Stone.ai_branco.png" alt="Impulso Stone" className="h-8 sm:h-10 lg:h-12" />
           </div>
           
           {/* Back Link */}
           <Link 
             to="/" 
-            className="absolute top-6 right-6 bg-white/15 backdrop-blur-sm text-white px-4 py-2 rounded-lg hover:bg-white/25 transition-all duration-300 text-sm font-medium border border-white/20 inline-flex items-center"
+            className="absolute top-4 sm:top-6 right-4 sm:right-6 bg-white/15 backdrop-blur-sm text-white px-3 sm:px-4 py-2 rounded-lg hover:bg-white/25 transition-all duration-300 text-xs sm:text-sm font-medium border border-white/20 inline-flex items-center"
           >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Voltar
+            <ArrowLeft className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+            <span className="hidden sm:inline">Voltar</span>
           </Link>
           
-          <div className="text-center mt-12">
-            <div className="bg-white/15 backdrop-blur-sm rounded-full p-4 w-20 h-20 mx-auto mb-6 border border-white/20">
-              <TrendingUp className="w-12 h-12 text-white mx-auto" />
+          <div className="text-center mt-8 sm:mt-12">
+            <div className="bg-white/15 backdrop-blur-sm rounded-full p-3 sm:p-4 w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 sm:mb-6 border border-white/20">
+              <TrendingUp className="w-10 h-10 sm:w-12 sm:h-12 text-white mx-auto" />
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 sm:mb-4 leading-tight px-4">
               {areaName}
             </h1>
-            <p className="text-xl text-white/90 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-base sm:text-lg lg:text-xl text-white/90 max-w-3xl mx-auto leading-relaxed px-4">
               {areaDescription}
             </p>
           </div>
@@ -111,7 +111,7 @@ const MarketingComunicacao = () => {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         {/* Loading State */}
         {isLoading && (
           <div className="flex justify-center items-center py-20">
@@ -127,39 +127,39 @@ const MarketingComunicacao = () => {
           <>
             {allMentors.length > 0 ? (
               <>
-                <div className="text-center mb-8">
-                  <h2 className="text-2xl font-bold text-[#014837] mb-2">
+                <div className="text-center mb-6 sm:mb-8">
+                  <h2 className="text-xl sm:text-2xl font-bold text-[#014837] mb-2">
                     {allMentors.length} Mentor{allMentors.length !== 1 ? 'es' : ''} em {areaName}
                   </h2>
-                  <div className="flex justify-center space-x-6 mb-4">
-                    <div className="flex items-center">
+                  <div className="flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:space-x-6 mb-4">
+                    <div className="flex items-center justify-center">
                       <div className="w-3 h-3 bg-gradient-to-r from-[#11AE5E] to-[#10CA7B] rounded-full mr-2"></div>
-                      <span className="text-green-700 font-medium">{availableMentors.length} Disponível{availableMentors.length !== 1 ? 'is' : ''}</span>
+                      <span className="text-green-700 font-medium text-sm sm:text-base">{availableMentors.length} Disponível{availableMentors.length !== 1 ? 'is' : ''}</span>
                     </div>
-                    <div className="flex items-center">
+                    <div className="flex items-center justify-center">
                       <div className="w-3 h-3 bg-red-400 rounded-full mr-2"></div>
-                      <span className="text-red-600 font-medium">{unavailableMentors.length} Indisponível{unavailableMentors.length !== 1 ? 'is' : ''}</span>
+                      <span className="text-red-600 font-medium text-sm sm:text-base">{unavailableMentors.length} Indisponível{unavailableMentors.length !== 1 ? 'is' : ''}</span>
                     </div>
                   </div>
-                  <p className="text-gray-600 mb-6">Escolha o mentor ideal para acelerar seu crescimento na área</p>
+                  <p className="text-gray-600 mb-4 sm:mb-6 px-4">Escolha o mentor ideal para acelerar seu crescimento na área</p>
                   
                   {/* Barra de Pesquisa */}
                   <div className="max-w-md mx-auto relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <Search className="h-5 w-5 text-gray-400" />
+                      <Search className="h-4 w-4 sm:h-5 sm:w-5 text-gray-400" />
                     </div>
                     <Input
                       type="text"
                       placeholder="Pesquisar mentor por nome..."
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
-                      className="pl-10 pr-4 py-2 w-full border-[#11AE5E]/30 focus:border-[#11AE5E] focus:ring-[#11AE5E]/20"
+                      className="pl-9 sm:pl-10 pr-4 py-2 w-full border-[#11AE5E]/30 focus:border-[#11AE5E] focus:ring-[#11AE5E]/20 text-sm sm:text-base"
                     />
                   </div>
                 </div>
                 
                 {filteredMentors.length > 0 ? (
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 sm:gap-8">
                     {filteredMentors.map((mentor) => (
                       <MentorCard
                         key={mentor.id}
@@ -173,31 +173,31 @@ const MarketingComunicacao = () => {
                     <div className="bg-gray-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
                       <Search className="w-8 h-8 text-gray-400" />
                     </div>
-                    <h3 className="text-xl font-semibold text-[#014837] mb-2">
+                    <h3 className="text-lg sm:text-xl font-semibold text-[#014837] mb-2">
                       Nenhum mentor encontrado
                     </h3>
-                    <p className="text-gray-600">
+                    <p className="text-gray-600 px-4">
                       Nenhum mentor foi encontrado com o termo "{searchTerm}". Tente uma pesquisa diferente.
                     </p>
                   </div>
                 )}
               </>
             ) : (
-              <div className="text-center py-20">
-                <div className="bg-gradient-to-br from-[#10CA7B]/10 to-[#11AE5E]/10 rounded-full w-32 h-32 flex items-center justify-center mx-auto mb-6">
-                  <TrendingUp className="w-16 h-16 text-[#11AE5E]" />
+              <div className="text-center py-12 sm:py-20">
+                <div className="bg-gradient-to-br from-[#10CA7B]/10 to-[#11AE5E]/10 rounded-full w-24 h-24 sm:w-32 sm:h-32 flex items-center justify-center mx-auto mb-4 sm:mb-6">
+                  <TrendingUp className="w-12 h-12 sm:w-16 sm:h-16 text-[#11AE5E]" />
                 </div>
-                <h3 className="text-2xl font-bold text-[#11AE5E] mb-4">
+                <h3 className="text-xl sm:text-2xl font-bold text-[#11AE5E] mb-4 px-4">
                   Nenhum mentor disponível em {areaName}
                 </h3>
-                <p className="text-gray-600 mb-6">
+                <p className="text-gray-600 mb-6 px-4">
                   Estamos buscando profissionais qualificados nesta área. Volte em breve!
                 </p>
                 <Link 
                   to="/"
-                  className="inline-flex items-center bg-gradient-to-r from-[#11AE5E]/90 to-[#10CA7B]/90 text-white px-6 py-3 rounded-lg hover:from-[#10CA7B]/90 hover:to-[#11AE5E]/90 transition-all duration-300"
+                  className="inline-flex items-center bg-gradient-to-r from-[#11AE5E]/90 to-[#10CA7B]/90 text-white px-4 sm:px-6 py-3 rounded-lg hover:from-[#10CA7B]/90 hover:to-[#11AE5E]/90 transition-all duration-300"
                 >
-                  <ArrowLeft className="w-5 h-5 mr-2" />
+                  <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                   Voltar às áreas
                 </Link>
               </div>

@@ -126,12 +126,6 @@ export const MentorDetailsModal: React.FC<MentorDetailsModalProps> = ({
                 {mentor.disponivel ? "Disponível" : "Indisponível"}
               </span>
             </div>
-            {mentor.disponibilidade && (
-              <div className="flex items-center space-x-2">
-                <Clock className="w-4 h-4 text-impulso-light" />
-                <span className="text-gray-600">{mentor.disponibilidade}</span>
-              </div>
-            )}
           </div>
 
           {/* Description */}

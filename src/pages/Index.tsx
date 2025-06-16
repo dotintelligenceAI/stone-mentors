@@ -194,43 +194,43 @@ const Index = () => {
     <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-[#11AE5E]/5">
       {/* Header */}
       <div className="bg-gradient-to-r from-[#11AE5E]/95 via-[#11AE5E]/90 to-[#10CA7B]/95 shadow-lg">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24 relative">
           {/* Logo */}
-          <div className="absolute top-6 left-6">
-            <img src="/Logo_Impulso_Stone.ai_branco.png" alt="Impulso Stone" className="h-12" />
+          <div className="absolute top-4 sm:top-6 left-4 sm:left-6">
+            <img src="/Logo_Impulso_Stone.ai_branco.png" alt="Impulso Stone" className="h-8 sm:h-10 lg:h-12" />
           </div>
           
           {/* Admin Link */}
           <Link 
             to="/login" 
-            className="absolute top-6 right-6 bg-white/15 backdrop-blur-sm text-white px-4 py-2 rounded-lg hover:bg-white/25 transition-all duration-300 text-sm font-medium border border-white/20"
+            className="absolute top-4 sm:top-6 right-4 sm:right-6 bg-white/15 backdrop-blur-sm text-white px-3 sm:px-4 py-2 rounded-lg hover:bg-white/25 transition-all duration-300 text-xs sm:text-sm font-medium border border-white/20"
           >
             Admin
           </Link>
-          <div className="text-center mt-12">
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-8">
+          <div className="text-center mt-8 sm:mt-12">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold text-white mb-6 sm:mb-8 leading-tight">
               Escolha o mentor ideal pra você e pro seu negócio
             </h1>
-            <p className="text-xl md:text-2xl text-white/90 max-w-4xl mx-auto leading-relaxed mb-12">
+            <p className="text-lg sm:text-xl lg:text-2xl text-white/90 max-w-4xl mx-auto leading-relaxed mb-8 sm:mb-12 px-4">
               Conecte-se com quem pode te ajudar a dar o próximo passo. Os mentores Impulso são especialistas da Stone prontos pra te ouvir e compartilhar dicas práticas pro dia a dia do seu negócio. É só escolher e agendar sua mentoria!
             </p>
             {!isLoading && (
-              <div className="flex justify-center items-center space-x-8">
-                <div className="bg-white/15 backdrop-blur-sm rounded-full px-6 py-3 border border-white/20">
-                  <span className="text-white font-semibold flex items-center">
-                    <Users className="w-5 h-5 mr-2" />
+              <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-8 px-4">
+                <div className="bg-white/15 backdrop-blur-sm rounded-full px-4 sm:px-6 py-3 border border-white/20">
+                  <span className="text-white font-semibold flex items-center text-sm sm:text-base">
+                    <Users className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                     {totalAvailableMentors} mentores disponíveis
                   </span>
                 </div>
                 {totalMentors > totalAvailableMentors && (
-                  <div className="bg-white/15 backdrop-blur-sm rounded-full px-6 py-3 border border-white/20">
-                    <span className="text-white font-semibold">
+                  <div className="bg-white/15 backdrop-blur-sm rounded-full px-4 sm:px-6 py-3 border border-white/20">
+                    <span className="text-white font-semibold text-sm sm:text-base">
                       {totalMentors - totalAvailableMentors} indisponíveis
                     </span>
                   </div>
                 )}
-                <div className="bg-white/15 backdrop-blur-sm rounded-full px-6 py-3 border border-white/20">
-                  <span className="text-white font-semibold">Acelere sua carreira hoje!</span>
+                <div className="bg-white/15 backdrop-blur-sm rounded-full px-4 sm:px-6 py-3 border border-white/20">
+                  <span className="text-white font-semibold text-sm sm:text-base">Impulsione o seu negócio!</span>
                 </div>
               </div>
             )}
@@ -239,7 +239,7 @@ const Index = () => {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
         {/* Areas Grid */}
         {isLoading ? (
           <div className="flex justify-center items-center py-20">
@@ -267,17 +267,16 @@ const Index = () => {
           </div>
         ) : (
           <>
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-[#11AE5E] mb-4">
+            <div className="text-center mb-8 sm:mb-12">
+              <h2 className="text-2xl sm:text-3xl font-bold text-[#11AE5E] mb-4">
               Escolha a área que você mais precisa de apoio
-
               </h2>
-              <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto px-4">
               Veja os temas disponíveis, entenda como cada área pode ajudar o seu negócio e encontre o mentor ideal pro seu momento.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
               {areas.map((area) => {
                 const IconComponent = area.icon;
                 return (
@@ -288,23 +287,23 @@ const Index = () => {
                   >
                     <div className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 overflow-hidden border-2 border-transparent hover:border-[#10CA7B]/20">
                       {/* Header with gradient */}
-                      <div className={`bg-gradient-to-r ${area.color} via-[#11AE5E]/90 p-8 text-white`}>
+                      <div className={`bg-gradient-to-r ${area.color} via-[#11AE5E]/90 p-6 sm:p-8 text-white`}>
                         <div className="flex items-center justify-between mb-4">
-                          <div className="bg-white/20 backdrop-blur-sm rounded-full p-3">
-                            <IconComponent className="w-8 h-8" />
+                          <div className="bg-white/20 backdrop-blur-sm rounded-full p-2 sm:p-3">
+                            <IconComponent className="w-6 h-6 sm:w-8 sm:h-8" />
                           </div>
                         </div>
-                        <h3 className="text-2xl font-bold mb-2">{area.name}</h3>
-                        <p className="text-white/90 text-lg font-medium">{area.description}</p>
-                        <p className="text-white/80 text-base mt-2">{area.subDescription}</p>
+                        <h3 className="text-xl sm:text-2xl font-bold mb-2">{area.name}</h3>
+                        <p className="text-white/90 text-base sm:text-lg font-medium">{area.description}</p>
+                        <p className="text-white/80 text-sm sm:text-base mt-2">{area.subDescription}</p>
                       </div>
 
                       {/* Content */}
-                      <div className="p-8">
+                      <div className="p-6 sm:p-8">
                         <div className="flex items-center justify-between">
                           <div className="text-[#11AE5E]">
-                            <span className="text-3xl font-bold text-[#10CA7B]">{area.count}</span>
-                            <span className="text-lg font-semibold ml-2">
+                            <span className="text-2xl sm:text-3xl font-bold text-[#10CA7B]">{area.count}</span>
+                            <span className="text-base sm:text-lg font-semibold ml-2">
                               mentor{area.count !== 1 ? 'es' : ''} disponível{area.count !== 1 ? 'is' : ''}
                             </span>
                             {area.totalCount > area.count && (
@@ -313,8 +312,8 @@ const Index = () => {
                               </div>
                             )}
                           </div>
-                          <div className="bg-[#10CA7B]/10 rounded-full p-3 group-hover:bg-[#10CA7B] group-hover:text-[#11AE5E] transition-all duration-300">
-                            <ArrowRight className="w-6 h-6 text-[#10CA7B] group-hover:text-[#11AE5E]" />
+                          <div className="bg-[#10CA7B]/10 rounded-full p-2 sm:p-3 group-hover:bg-[#10CA7B] group-hover:text-[#11AE5E] transition-all duration-300">
+                            <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 text-[#10CA7B] group-hover:text-[#11AE5E]" />
                           </div>
                         </div>
                         
@@ -331,15 +330,15 @@ const Index = () => {
             </div>
 
             {/* Call to Action */}
-            <div className="text-center mt-16">
-              <div className="bg-gradient-to-r from-[#11AE5E]/5 to-[#10CA7B]/10 rounded-2xl p-8 border border-[#10CA7B]/20">
-                <h3 className="text-2xl font-bold text-[#11AE5E] mb-4">
+            <div className="text-center mt-12 sm:mt-16">
+              <div className="bg-gradient-to-r from-[#11AE5E]/5 to-[#10CA7B]/10 rounded-2xl p-6 sm:p-8 border border-[#10CA7B]/20">
+                <h3 className="text-xl sm:text-2xl font-bold text-[#11AE5E] mb-4">
                   Não encontrou sua área?
                 </h3>
-                <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
+                <p className="text-gray-600 mb-6 max-w-2xl mx-auto px-4">
                   Estamos sempre expandindo nossa rede de mentores. Entre em contato conosco para sugestões de novas áreas ou mentores específicos.
                 </p>
-                <button className="bg-gradient-to-r from-[#11AE5E]/90 to-[#10CA7B]/90 text-white px-8 py-3 rounded-lg hover:from-[#10CA7B]/90 hover:to-[#11AE5E]/90 transition-all duration-300 transform hover:scale-105 font-semibold">
+                <button className="bg-gradient-to-r from-[#11AE5E]/90 to-[#10CA7B]/90 text-white px-6 sm:px-8 py-3 rounded-lg hover:from-[#10CA7B]/90 hover:to-[#11AE5E]/90 transition-all duration-300 transform hover:scale-105 font-semibold">
                   Fale Conosco
                 </button>
               </div>
