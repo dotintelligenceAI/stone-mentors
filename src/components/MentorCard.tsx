@@ -32,7 +32,7 @@ export const MentorCard: React.FC<MentorCardProps> = ({ mentor, onSelect }) => {
           {/* Status Badge */}
           <div className="absolute top-4 right-4">
             {mentor.disponivel ? (
-              <Badge className="bg-gradient-to-r from-impulso-dark/90 to-impulso-light/90 text-white border-0 shadow-md">
+              <Badge className="bg-gradient-to-r from-[#11AE5E]/90 to-[#10CA7B]/90 text-white border-0 shadow-md">
                 <Star className="w-3 h-3 mr-1" />
                 Disponível
               </Badge>
@@ -78,7 +78,7 @@ export const MentorCard: React.FC<MentorCardProps> = ({ mentor, onSelect }) => {
               <User className="w-4 h-4 mr-2" />
               <span className={`text-sm font-semibold ${
                 mentor.disponivel 
-                  ? 'bg-gradient-to-r from-impulso-dark to-impulso-light bg-clip-text text-transparent'
+                  ? 'bg-gradient-to-r from-[#11AE5E] to-[#10CA7B] bg-clip-text text-transparent'
                   : 'text-gray-500'
               }`}>
                 {mentor.cargo_atual}
@@ -106,7 +106,7 @@ export const MentorCard: React.FC<MentorCardProps> = ({ mentor, onSelect }) => {
               disabled={!mentor.disponivel}
               className={`w-full transition-all duration-300 transform ${
                 mentor.disponivel
-                  ? 'bg-gradient-to-r from-impulso-dark/90 to-impulso-light/90 hover:from-impulso-light/90 hover:to-impulso-dark/90 text-white shadow-lg hover:shadow-xl hover:scale-105'
+                  ? 'bg-gradient-to-r from-[#11AE5E]/90 to-[#10CA7B]/90 hover:from-[#10CA7B]/90 hover:to-[#11AE5E]/90 text-white shadow-lg hover:shadow-xl hover:scale-105'
                   : 'bg-gray-200 text-gray-500 cursor-not-allowed'
               }`}
             >

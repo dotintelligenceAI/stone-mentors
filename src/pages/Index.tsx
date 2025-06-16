@@ -42,6 +42,108 @@ const Index = () => {
     return mentors.filter(mentor => mentor.disponivel && filterFunction(mentor)).length;
   };
 
+  // Função para filtro de Marketing e Comunicação
+  const isMarketingComunicacao = (mentor: Mentor) => {
+    const setor = mentor.setor?.toLowerCase() || '';
+    return setor.includes('marketing') || 
+           setor.includes('comunicação') ||
+           setor.includes('comunicacao') ||
+           setor.includes('redes sociais') ||
+           setor.includes('social media') ||
+           setor.includes('conteúdo') ||
+           setor.includes('conteudo') ||
+           setor.includes('criatividade') ||
+           setor.includes('campanhas') ||
+           setor.includes('divulgação') ||
+           setor.includes('divulgacao') ||
+           setor.includes('branding') ||
+           setor.includes('posicionamento de marca') ||
+           setor.includes('gestão de tempo') ||
+           setor.includes('gestao de tempo');
+  };
+
+  // Função para filtro de Comercial, Vendas e Relacionamento
+  const isComercialVendas = (mentor: Mentor) => {
+    const setor = mentor.setor?.toLowerCase() || '';
+    return setor.includes('vendas') ||
+           setor.includes('comercial') ||
+           setor.includes('relacionamento') ||
+           setor.includes('sales') ||
+           setor.includes('negociação') ||
+           setor.includes('negociacao') ||
+           setor.includes('atendimento') ||
+           setor.includes('customer') ||
+           setor.includes('cliente') ||
+           setor.includes('gestão de negócio') ||
+           setor.includes('gestao de negocio') ||
+           setor.includes('crescimento') ||
+           setor.includes('prospecção') ||
+           setor.includes('prospeccao') ||
+           setor.includes('funil de vendas');
+  };
+
+  // Função para filtro de Finanças
+  const isFinancas = (mentor: Mentor) => {
+    const setor = mentor.setor?.toLowerCase() || '';
+    return setor.includes('finanças') || 
+           setor.includes('financas') ||
+           setor.includes('financeiro') ||
+           setor.includes('financeira') ||
+           setor.includes('contabil') ||
+           setor.includes('contabilidade') ||
+           setor.includes('investimento') ||
+           setor.includes('controladoria') ||
+           setor.includes('planejamento financeiro') ||
+           setor.includes('fluxo de caixa') ||
+           setor.includes('precificação') ||
+           setor.includes('precificacao') ||
+           setor.includes('formação de preço') ||
+           setor.includes('dre') ||
+           setor.includes('fp&a') ||
+           setor.includes('organização financeira') ||
+           setor.includes('organizacao financeira');
+  };
+
+  // Função para filtro de Gestão, Inovação e Estratégia
+  const isGestaoInovacao = (mentor: Mentor) => {
+    const setor = mentor.setor?.toLowerCase() || '';
+    return setor.includes('gestão') || 
+           setor.includes('gestao') ||
+           setor.includes('inovação') ||
+           setor.includes('inovacao') ||
+           setor.includes('estratégia') ||
+           setor.includes('estrategia') ||
+           setor.includes('liderança') ||
+           setor.includes('lideranca') ||
+           setor.includes('tecnologia') ||
+           setor.includes('tech') ||
+           setor.includes('desenvolvimento') ||
+           setor.includes('programação') ||
+           setor.includes('programacao') ||
+           setor.includes('treinamento') ||
+           setor.includes('planejamento') ||
+           setor.includes('definição de metas') ||
+           setor.includes('definicao de metas') ||
+           setor.includes('adaptabilidade') ||
+           setor.includes('gerenciamento') ||
+           setor.includes('organização') ||
+           setor.includes('organizacao') ||
+           setor.includes('processos') ||
+           setor.includes('melhoria contínua') ||
+           setor.includes('melhoria continua') ||
+           setor.includes('automação') ||
+           setor.includes('automacao') ||
+           setor.includes('inteligência artificial') ||
+           setor.includes('inteligencia artificial') ||
+           setor.includes('data') ||
+           setor.includes('dados') ||
+           setor.includes('analytics') ||
+           setor.includes('kpi') ||
+           setor.includes('produto') ||
+           setor.includes('negócio') ||
+           setor.includes('negocio');
+  };
+
   const areas = [
     {
       name: "Comunicação e Marketing",
@@ -49,21 +151,9 @@ const Index = () => {
       description: "Divulgue melhor o seu negócio.",
       subDescription: "Mentores que sabem usar redes sociais, criar conteúdo e fortalecer sua marca.",
       icon: TrendingUp,
-      color: "from-impulso-dark/90 to-impulso-light/80",
-      count: getAreaAvailableMentorCount(mentor => 
-        mentor.setor?.toLowerCase().includes('marketing') || 
-        mentor.setor?.toLowerCase().includes('comunicação') ||
-        mentor.setor?.toLowerCase().includes('comunicacao') ||
-        mentor.setor?.toLowerCase().includes('gestão de tempo') ||
-        false
-      ),
-      totalCount: getAreaMentorCount(mentor => 
-        mentor.setor?.toLowerCase().includes('marketing') || 
-        mentor.setor?.toLowerCase().includes('comunicação') ||
-        mentor.setor?.toLowerCase().includes('comunicacao') ||
-        mentor.setor?.toLowerCase().includes('gestão de tempo') ||
-        false
-      )
+      color: "from-[#11AE5E]/90 to-[#10CA7B]/80",
+      count: getAreaAvailableMentorCount(isMarketingComunicacao),
+      totalCount: getAreaMentorCount(isMarketingComunicacao)
     },
     {
       name: "Comercial, Vendas e Relacionamento",
@@ -71,25 +161,9 @@ const Index = () => {
       description: "Venda mais e atenda melhor.",
       subDescription: "Mentores com experiência em negociação, atendimento e estratégias de vendas.",
       icon: Target,
-      color: "from-impulso-dark/90 to-impulso-light/80",
-      count: getAreaAvailableMentorCount(mentor => 
-        mentor.setor?.toLowerCase().includes('comercial') || 
-        mentor.setor?.toLowerCase().includes('vendas') ||
-        mentor.setor?.toLowerCase().includes('relacionamento') ||
-        mentor.setor?.toLowerCase().includes('sales') ||
-        mentor.setor?.toLowerCase().includes('gestão de negócio') ||
-        mentor.setor?.toLowerCase().includes('gestao de negocio') ||
-        false
-      ),
-      totalCount: getAreaMentorCount(mentor => 
-        mentor.setor?.toLowerCase().includes('comercial') || 
-        mentor.setor?.toLowerCase().includes('vendas') ||
-        mentor.setor?.toLowerCase().includes('relacionamento') ||
-        mentor.setor?.toLowerCase().includes('sales') ||
-        mentor.setor?.toLowerCase().includes('gestão de negócio') ||
-        mentor.setor?.toLowerCase().includes('gestao de negocio') ||
-        false
-      )
+      color: "from-[#11AE5E]/90 to-[#10CA7B]/80",
+      count: getAreaAvailableMentorCount(isComercialVendas),
+      totalCount: getAreaMentorCount(isComercialVendas)
     },
     {
       name: "Contabilidade e Finanças",
@@ -97,25 +171,9 @@ const Index = () => {
       description: "Cuide bem do seu dinheiro.",
       subDescription: "Mentores que orientam sobre controle financeiro, precificação e fluxo de caixa.",
       icon: DollarSign,
-      color: "from-impulso-dark/90 to-impulso-light/80",
-      count: getAreaAvailableMentorCount(mentor => 
-        mentor.setor?.toLowerCase().includes('finanças') || 
-        mentor.setor?.toLowerCase().includes('financas') ||
-        mentor.setor?.toLowerCase().includes('financeiro') ||
-        mentor.setor?.toLowerCase().includes('contabil') ||
-        mentor.setor?.toLowerCase().includes('investimento') ||
-        mentor.setor?.toLowerCase().includes('planejamento financeiro') ||
-        false
-      ),
-      totalCount: getAreaMentorCount(mentor => 
-        mentor.setor?.toLowerCase().includes('finanças') || 
-        mentor.setor?.toLowerCase().includes('financas') ||
-        mentor.setor?.toLowerCase().includes('financeiro') ||
-        mentor.setor?.toLowerCase().includes('contabil') ||
-        mentor.setor?.toLowerCase().includes('investimento') ||
-        mentor.setor?.toLowerCase().includes('planejamento financeiro') ||
-        false
-      )
+      color: "from-[#11AE5E]/90 to-[#10CA7B]/80",
+      count: getAreaAvailableMentorCount(isFinancas),
+      totalCount: getAreaMentorCount(isFinancas)
     },
     {
       name: "Gestão, Inovação e Estratégia",
@@ -123,55 +181,9 @@ const Index = () => {
       description: "Organize e faça seu negócio crescer.",
       subDescription: "Mentores que ajudam com planejamento, rotina e ideias para inovar.",
       icon: BarChart3,
-      color: "from-impulso-dark/90 to-impulso-light/80",
-      count: getAreaAvailableMentorCount(mentor => 
-        mentor.setor?.toLowerCase().includes('gestão') || 
-        mentor.setor?.toLowerCase().includes('gestao') ||
-        mentor.setor?.toLowerCase().includes('inovação') ||
-        mentor.setor?.toLowerCase().includes('inovacao') ||
-        mentor.setor?.toLowerCase().includes('estratégia') ||
-        mentor.setor?.toLowerCase().includes('estrategia') ||
-        mentor.setor?.toLowerCase().includes('liderança') ||
-        mentor.setor?.toLowerCase().includes('lideranca') ||
-        mentor.setor?.toLowerCase().includes('tecnologia') ||
-        mentor.setor?.toLowerCase().includes('tech') ||
-        mentor.setor?.toLowerCase().includes('desenvolvimento') ||
-        mentor.setor?.toLowerCase().includes('programação') ||
-        mentor.setor?.toLowerCase().includes('programacao') ||
-        mentor.setor?.toLowerCase().includes('treinamento') ||
-        mentor.setor?.toLowerCase().includes('planejamento') ||
-        mentor.setor?.toLowerCase().includes('definição de metas') ||
-        mentor.setor?.toLowerCase().includes('definicao de metas') ||
-        mentor.setor?.toLowerCase().includes('adaptabilidade') ||
-        mentor.setor?.toLowerCase().includes('gerenciamento') ||
-        mentor.setor?.toLowerCase().includes('organização') ||
-        mentor.setor?.toLowerCase().includes('organizacao') ||
-        false
-      ),
-      totalCount: getAreaMentorCount(mentor => 
-        mentor.setor?.toLowerCase().includes('gestão') || 
-        mentor.setor?.toLowerCase().includes('gestao') ||
-        mentor.setor?.toLowerCase().includes('inovação') ||
-        mentor.setor?.toLowerCase().includes('inovacao') ||
-        mentor.setor?.toLowerCase().includes('estratégia') ||
-        mentor.setor?.toLowerCase().includes('estrategia') ||
-        mentor.setor?.toLowerCase().includes('liderança') ||
-        mentor.setor?.toLowerCase().includes('lideranca') ||
-        mentor.setor?.toLowerCase().includes('tecnologia') ||
-        mentor.setor?.toLowerCase().includes('tech') ||
-        mentor.setor?.toLowerCase().includes('desenvolvimento') ||
-        mentor.setor?.toLowerCase().includes('programação') ||
-        mentor.setor?.toLowerCase().includes('programacao') ||
-        mentor.setor?.toLowerCase().includes('treinamento') ||
-        mentor.setor?.toLowerCase().includes('planejamento') ||
-        mentor.setor?.toLowerCase().includes('definição de metas') ||
-        mentor.setor?.toLowerCase().includes('definicao de metas') ||
-        mentor.setor?.toLowerCase().includes('adaptabilidade') ||
-        mentor.setor?.toLowerCase().includes('gerenciamento') ||
-        mentor.setor?.toLowerCase().includes('organização') ||
-        mentor.setor?.toLowerCase().includes('organizacao') ||
-        false
-      )
+      color: "from-[#11AE5E]/90 to-[#10CA7B]/80",
+      count: getAreaAvailableMentorCount(isGestaoInovacao),
+      totalCount: getAreaMentorCount(isGestaoInovacao)
     }
   ];
 
@@ -179,9 +191,9 @@ const Index = () => {
   const totalMentors = mentors.length;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-impulso-dark/5">
+    <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-[#11AE5E]/5">
       {/* Header */}
-      <div className="bg-gradient-to-r from-impulso-dark/95 via-impulso-dark/90 to-impulso-light/95 shadow-lg">
+      <div className="bg-gradient-to-r from-[#11AE5E]/95 via-[#11AE5E]/90 to-[#10CA7B]/95 shadow-lg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 relative">
           {/* Logo */}
           <div className="absolute top-6 left-6">
@@ -232,14 +244,14 @@ const Index = () => {
         {isLoading ? (
           <div className="flex justify-center items-center py-20">
             <div className="text-center">
-              <div className="animate-spin w-12 h-12 border-4 border-impulso-light/20 border-t-impulso-light rounded-full mx-auto mb-4"></div>
-              <p className="text-impulso-dark font-medium text-lg">Carregando áreas de mentoria...</p>
+              <div className="animate-spin w-12 h-12 border-4 border-[#10CA7B]/20 border-t-[#10CA7B] rounded-full mx-auto mb-4"></div>
+              <p className="text-[#11AE5E] font-medium text-lg">Carregando áreas de mentoria...</p>
             </div>
           </div>
         ) : mentors.length === 0 ? (
           <div className="text-center py-20">
             <div className="bg-white/50 backdrop-blur-sm rounded-2xl p-8 max-w-2xl mx-auto">
-              <h3 className="text-2xl font-bold text-impulso-dark mb-4">
+              <h3 className="text-2xl font-bold text-[#11AE5E] mb-4">
                 Nenhum mentor disponível no momento
               </h3>
               <p className="text-gray-600 mb-6">
@@ -247,7 +259,7 @@ const Index = () => {
               </p>
               <button 
                 onClick={loadMentors}
-                className="bg-gradient-to-r from-impulso-dark to-impulso-light text-white px-6 py-2 rounded-lg hover:from-impulso-light hover:to-impulso-dark transition-all duration-300"
+                className="bg-gradient-to-r from-[#11AE5E] to-[#10CA7B] text-white px-6 py-2 rounded-lg hover:from-[#10CA7B] hover:to-[#11AE5E] transition-all duration-300"
               >
                 Tentar novamente
               </button>
@@ -256,11 +268,12 @@ const Index = () => {
         ) : (
           <>
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-impulso-dark mb-4">
-                Escolha Sua Área de Interesse
+              <h2 className="text-3xl font-bold text-[#11AE5E] mb-4">
+              Escolha a área que você mais precisa de apoio
+
               </h2>
               <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                Navegue pelas diferentes especialidades e encontre o mentor ideal para sua jornada profissional
+              Veja os temas disponíveis, entenda como cada área pode ajudar o seu negócio e encontre o mentor ideal pro seu momento.
               </p>
             </div>
 
@@ -273,9 +286,9 @@ const Index = () => {
                     to={area.route}
                     className="group block"
                   >
-                    <div className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 overflow-hidden border-2 border-transparent hover:border-impulso-light/20">
+                    <div className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 overflow-hidden border-2 border-transparent hover:border-[#10CA7B]/20">
                       {/* Header with gradient */}
-                      <div className={`bg-gradient-to-r ${area.color} via-impulso-dark/90 p-8 text-white`}>
+                      <div className={`bg-gradient-to-r ${area.color} via-[#11AE5E]/90 p-8 text-white`}>
                         <div className="flex items-center justify-between mb-4">
                           <div className="bg-white/20 backdrop-blur-sm rounded-full p-3">
                             <IconComponent className="w-8 h-8" />
@@ -289,8 +302,8 @@ const Index = () => {
                       {/* Content */}
                       <div className="p-8">
                         <div className="flex items-center justify-between">
-                          <div className="text-impulso-dark">
-                            <span className="text-3xl font-bold text-impulso-light">{area.count}</span>
+                          <div className="text-[#11AE5E]">
+                            <span className="text-3xl font-bold text-[#10CA7B]">{area.count}</span>
                             <span className="text-lg font-semibold ml-2">
                               mentor{area.count !== 1 ? 'es' : ''} disponível{area.count !== 1 ? 'is' : ''}
                             </span>
@@ -300,8 +313,8 @@ const Index = () => {
                               </div>
                             )}
                           </div>
-                          <div className="bg-impulso-light/10 rounded-full p-3 group-hover:bg-impulso-light group-hover:text-impulso-dark transition-all duration-300">
-                            <ArrowRight className="w-6 h-6 text-impulso-light group-hover:text-impulso-dark" />
+                          <div className="bg-[#10CA7B]/10 rounded-full p-3 group-hover:bg-[#10CA7B] group-hover:text-[#11AE5E] transition-all duration-300">
+                            <ArrowRight className="w-6 h-6 text-[#10CA7B] group-hover:text-[#11AE5E]" />
                           </div>
                         </div>
                         
@@ -319,14 +332,14 @@ const Index = () => {
 
             {/* Call to Action */}
             <div className="text-center mt-16">
-              <div className="bg-gradient-to-r from-impulso-dark/5 to-impulso-light/10 rounded-2xl p-8 border border-impulso-light/20">
-                <h3 className="text-2xl font-bold text-impulso-dark mb-4">
+              <div className="bg-gradient-to-r from-[#11AE5E]/5 to-[#10CA7B]/10 rounded-2xl p-8 border border-[#10CA7B]/20">
+                <h3 className="text-2xl font-bold text-[#11AE5E] mb-4">
                   Não encontrou sua área?
                 </h3>
                 <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
                   Estamos sempre expandindo nossa rede de mentores. Entre em contato conosco para sugestões de novas áreas ou mentores específicos.
                 </p>
-                <button className="bg-gradient-to-r from-impulso-dark/90 to-impulso-light/90 text-white px-8 py-3 rounded-lg hover:from-impulso-light/90 hover:to-impulso-dark/90 transition-all duration-300 transform hover:scale-105 font-semibold">
+                <button className="bg-gradient-to-r from-[#11AE5E]/90 to-[#10CA7B]/90 text-white px-8 py-3 rounded-lg hover:from-[#10CA7B]/90 hover:to-[#11AE5E]/90 transition-all duration-300 transform hover:scale-105 font-semibold">
                   Fale Conosco
                 </button>
               </div>
