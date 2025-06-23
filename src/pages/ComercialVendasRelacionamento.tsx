@@ -133,14 +133,7 @@ const ComercialVendasRelacionamento = () => {
                     {allMentors.length} Mentor{allMentors.length !== 1 ? 'es' : ''} em {areaName}
                   </h2>
                   <div className="flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:space-x-6 mb-4">
-                    <div className="flex items-center justify-center">
-                      <div className="w-3 h-3 bg-gradient-to-r from-[#11AE5E] to-[#10CA7B] rounded-full mr-2"></div>
-                      <span className="text-green-700 font-medium text-sm sm:text-base">{availableMentors.length} Disponível{availableMentors.length !== 1 ? 'is' : ''}</span>
-                    </div>
-                    <div className="flex items-center justify-center">
-                      <div className="w-3 h-3 bg-red-400 rounded-full mr-2"></div>
-                      <span className="text-red-600 font-medium text-sm sm:text-base">{unavailableMentors.length} Indisponível{unavailableMentors.length !== 1 ? 'is' : ''}</span>
-                    </div>
+
                   </div>
                   <p className="text-gray-600 mb-4 sm:mb-6 px-4">Escolha o mentor ideal para acelerar seu crescimento na área</p>
                   

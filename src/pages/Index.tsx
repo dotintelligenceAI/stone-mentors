@@ -306,11 +306,7 @@ const Index = () => {
                             <span className="text-base sm:text-lg font-semibold ml-2">
                               mentor{area.count !== 1 ? 'es' : ''} disponível{area.count !== 1 ? 'is' : ''}
                             </span>
-                            {area.totalCount > area.count && (
-                              <div className="text-sm text-gray-600 mt-1">
-                                {area.totalCount - area.count} indisponível{(area.totalCount - area.count) !== 1 ? 'is' : ''}
-                              </div>
-                            )}
+                            
                           </div>
                           <div className="bg-[#10CA7B]/10 rounded-full p-2 sm:p-3 group-hover:bg-[#10CA7B] group-hover:text-[#11AE5E] transition-all duration-300">
                             <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 text-[#10CA7B] group-hover:text-[#11AE5E]" />
