@@ -304,7 +304,7 @@ const Index = () => {
                           <div className="text-[#11AE5E]">
                             <span className="text-2xl sm:text-3xl font-bold text-[#10CA7B]">{area.count}</span>
                             <span className="text-base sm:text-lg font-semibold ml-2">
-                              mentor{area.count !== 1 ? 'es' : ''} disponível{area.count !== 1 ? 'is' : ''}
+                              mentor{area.count !== 1 ? 'es' : ''} disponíve{area.count !== 1 ? 'is' : ''}
                             </span>
                             
                           </div>
