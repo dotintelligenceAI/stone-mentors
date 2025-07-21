@@ -30,7 +30,6 @@ export const MentorModal: React.FC<MentorModalProps> = ({
     email_usuario: '',
     telefone_usuario: '',
     motivo: '',
-    agenda: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showForm, setShowForm] = useState(false);
@@ -114,10 +113,10 @@ export const MentorModal: React.FC<MentorModalProps> = ({
     
     if (!mentor) return;
     
-    if (!formData.nome_usuario || !formData.email_usuario || !formData.telefone_usuario || !formData.agenda) {
+    if (!formData.nome_usuario || !formData.email_usuario || !formData.telefone_usuario) {
       toast({
         title: "Informações Obrigatórias",
-        description: "Por favor, preencha nome, email, telefone e agenda.",
+        description: "Por favor, preencha nome, email e telefone.",
         variant: "destructive",
       });
       return;
@@ -183,7 +182,7 @@ export const MentorModal: React.FC<MentorModalProps> = ({
         description: `Você escolheu ${mentor.nome} como seu mentor. Eles entrarão em contato em breve!`,
       });
 
-      setFormData({ nome_usuario: '', email_usuario: '', telefone_usuario: '', motivo: '', agenda: '' });
+      setFormData({ nome_usuario: '', email_usuario: '', telefone_usuario: '', motivo: '' });
       setShowForm(false);
       onMentorChosen();
     } catch (error) {
@@ -361,53 +360,7 @@ export const MentorModal: React.FC<MentorModalProps> = ({
                   </div>
                 )}
 
-                {/* Opções de Agenda */}
-                {(mentor.opcao_agenda_um || mentor.opcao_agenda_dois || mentor.opcao_agenda_tres) && (
-                  <div>
-                    <h4 className="font-semibold text-impulso-dark mb-3">Opções de Agenda Disponíveis</h4>
-                    <div className="space-y-3">
-                      {mentor.opcao_agenda_um && (
-                        <div className="flex items-center space-x-3 bg-gradient-to-r from-[#10CA7B]/10 to-[#11AE5E]/5 rounded-lg p-4 border border-[#10CA7B]/20 hover:border-[#10CA7B]/40 transition-all duration-300">
-                          <div className="bg-impulso-light/20 rounded-full p-2">
-                            <Calendar className="w-5 h-5 text-impulso-dark" />
-                          </div>
-                          <div className="flex-1">
-                            <span className="text-impulso-dark font-semibold block mb-1">Opção 1:</span>
-                            <span className="text-gray-700 font-medium text-lg">
-                              {formatarDataHoraBrasileira(mentor.opcao_agenda_um)}
-                            </span>
-                          </div>
-                        </div>
-                      )}
-                      {mentor.opcao_agenda_dois && (
-                        <div className="flex items-center space-x-3 bg-gradient-to-r from-[#10CA7B]/10 to-[#11AE5E]/5 rounded-lg p-4 border border-[#10CA7B]/20 hover:border-[#10CA7B]/40 transition-all duration-300">
-                          <div className="bg-impulso-light/20 rounded-full p-2">
-                            <Calendar className="w-5 h-5 text-impulso-dark" />
-                          </div>
-                          <div className="flex-1">
-                            <span className="text-impulso-dark font-semibold block mb-1">Opção 2:</span>
-                            <span className="text-gray-700 font-medium text-lg">
-                              {formatarDataHoraBrasileira(mentor.opcao_agenda_dois)}
-                            </span>
-                          </div>
-                        </div>
-                      )}
-                      {mentor.opcao_agenda_tres && (
-                        <div className="flex items-center space-x-3 bg-gradient-to-r from-[#10CA7B]/10 to-[#11AE5E]/5 rounded-lg p-4 border border-[#10CA7B]/20 hover:border-[#10CA7B]/40 transition-all duration-300">
-                          <div className="bg-impulso-light/20 rounded-full p-2">
-                            <Calendar className="w-5 h-5 text-impulso-dark" />
-                          </div>
-                          <div className="flex-1">
-                            <span className="text-impulso-dark font-semibold block mb-1">Opção 3:</span>
-                            <span className="text-gray-700 font-medium text-lg">
-                              {formatarDataHoraBrasileira(mentor.opcao_agenda_tres)}
-                            </span>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                )}
+
               </div>
             ) : (
                              /* User Form */
@@ -483,37 +436,7 @@ export const MentorModal: React.FC<MentorModalProps> = ({
                     />
                   </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="agenda" className="text-impulso-dark font-medium">
-                      <Calendar className="w-4 h-4 inline mr-1" />
-                      Agenda *
-                    </Label>
-                    <Select
-                      value={formData.agenda}
-                      onValueChange={(value) => setFormData(prev => ({ ...prev, agenda: value }))}
-                    >
-                      <SelectTrigger className="border-impulso-light/30 focus:border-impulso-light">
-                        <SelectValue placeholder="Selecione uma opção de agenda" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {mentor.opcao_agenda_um && (
-                          <SelectItem value={mentor.opcao_agenda_um}>
-                            Opção 1: {formatarDataHoraBrasileira(mentor.opcao_agenda_um)}
-                          </SelectItem>
-                        )}
-                        {mentor.opcao_agenda_dois && (
-                          <SelectItem value={mentor.opcao_agenda_dois}>
-                            Opção 2: {formatarDataHoraBrasileira(mentor.opcao_agenda_dois)}
-                          </SelectItem>
-                        )}
-                        {mentor.opcao_agenda_tres && (
-                          <SelectItem value={mentor.opcao_agenda_tres}>
-                            Opção 3: {formatarDataHoraBrasileira(mentor.opcao_agenda_tres)}
-                          </SelectItem>
-                        )}
-                      </SelectContent>
-                    </Select>
-                  </div>
+
 
                   <div className="flex justify-end space-x-3 pt-4">
                     <Button
