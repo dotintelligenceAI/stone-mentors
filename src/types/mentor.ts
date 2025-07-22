@@ -29,6 +29,5 @@ export interface MentorSubmission {
   email_usuario: string;
   telefone_usuario: string;
   motivo?: string;
-  agenda?: string;
   data_submissao?: string;
 }
