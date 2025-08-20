@@ -9,7 +9,7 @@
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",
-    "start": "node node_modules/serve/bin/serve.js -s dist -l $PORT"
+    "start": "npx --yes serve@14 -s dist -l $PORT"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
